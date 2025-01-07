@@ -1,0 +1,121 @@
+<app-page-header icon="person_add">
+    <h2>Agregar Cobro</h2>
+
+    <button routerLink="/home" mat-flat-button color="primary" class="action">
+      <mat-icon class="mr-2">home</mat-icon>
+      <span>Go Home</span>
+    </button>
+  </app-page-header>
+
+<div class="dashboard-card-content">
+    <div class="card border-info" style="width: 100%;">
+        <div class="card-header text-white bg-dark" role="banner" aria-label="Información del paciente">
+            <h4 style="text-align: center;margin-top: 20px;">REGISTRAR COBRO</h4>
+        </div>
+        <div id="addpacientefocus" #addpacientefocus tabindex="-1" class="card-body" border-danger role="form"
+            aria-label="Registro cobro">
+            <form >
+                <mat-grid-list cols="3" rowHeight="2.5:0.7" class="mat-elevation-z4">
+                    <mat-grid-tile>
+                        <div class="form-group custom-input">
+                            <label><b>CLIENTE:</b></label>
+                            <input [(ngModel)]="nombreApellidoCliente"
+                            id="clie" name="clie" type="text" disabled="true" class="form-control border border-dark">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
+                            <mat-hint class="some-color" >MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker touchUi #picker></mat-datepicker>
+                          </mat-form-field>                                         
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="valactual">Valor Actual:</label>
+                            <input [(ngModel)]="cobro.cob_valorActual" id="valactual" name="valactual" pattern="^\d*\.?\d*$" value="0" type="number"
+                                class="form-control border border-dark" (keydown)="onTabPress($event)" (blur)="calcularValorTotalFoco()">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="multra">Multa Trabajo:</label>
+                            <input [(ngModel)]="cobro.cob_mul_trabajo"  id="multra" name="multra" pattern="^\d*\.?\d*$" value="0" type="number"
+                                class="form-control border border-dark" (keydown)="onTabPress($event)" (blur)="calcularValorTotalFoco()">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="mulreu">Multa Reunión:</label>
+                            <input [(ngModel)]="cobro.cob_mul_reunion" id="mulreu" name="mulreu" pattern="^\d*\.?\d*$" type="number" matInput
+                                matInput class="form-control border border-dark" (keydown)="onTabPress($event)" (blur)="calcularValorTotalFoco()">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="muldes">Multa Desfile :</label>
+                            <input [(ngModel)]="cobro.cob_mul_desfile" id="muldes" name="muldes"  pattern="^\d*\.?\d*$"  type="number" matInput
+                                class="form-control border border-dark" (keydown)="onTabPress($event)" (blur)="calcularValorTotalFoco()">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="cambmed">Cambio Medidor:</label>
+                            <input [(ngModel)]="cobro.cob_cambioMedidor" id="cambmed" name="cambmed" type="number" pattern="^\d*\.?\d*$" matInput
+                                class="form-control border border-dark" (keydown)="onTabPress($event)" (blur)="calcularValorTotalFoco()">
+                        </div>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="nuesoc">Nuevo Socio:</label>
+                            <input [(ngModel)]="cobro.cob_nuevoSocio" id="nuesoc" name="nuesoc" type="number" pattern="^\d*\.?\d*$" matInput
+                                class="form-control border border-dark" (keydown)="onTabPress($event)" (blur)="calcularValorTotalFoco()">
+                        </div>
+                    </mat-grid-tile>
+                    
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="insumo">Insumos:</label>
+                            <input [(ngModel)]="cobro.cob_insumo" id="insumo" name="insumo" type="number" pattern="^\d*\.?\d*$" matInput
+                                class="form-control border border-dark" (keydown)="onTabPress($event)" (blur)="calcularValorTotalFoco()">
+                        </div>
+                    </mat-grid-tile>
+                    
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="otro">Otros:</label>
+                            <input [(ngModel)]="cobro.cob_otros" id="otro" name="otro" type="number" pattern="^\d*\.?\d*$" matInput
+                                class="form-control border border-dark" (keydown)="onTabPress($event)" (blur)="calcularValorTotalFoco()">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group custom-input">
+                            <label for="cobtot"><b>COBRO TOTAL:</b></label>
+                            <input [(ngModel)]="valorTotalCobrar" id="cobtot" (click)="calcularValorTotal($event)" name="cobtot" type="number" pattern="^\d*\.?\d*$" matInput
+                                   class="form-control border border-dark" style="font-weight: bold; color: #007bff; font-size: 18px; size: 18em;" disabled="true"
+                                   (keydown)="onTabPress($event)" (blur)="calcularValorTotalFoco()">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="cobest">Cobro Estado:</label>
+                            <input [(ngModel)]="cobro.cob_estado" id="cobest" disabled="true" name="cobest" type="text" matInput
+                                class="form-control border border-dark">
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </form>
+        </div>
+
+        <div style="margin-bottom: 1%;" class="card-footer bg-transparent border-success" role="contentinfo">
+            <div mat-dialog-actions align="center">
+                <button  style="margin-right: 5%;" (click)="cancelar()" class="btn btn-primary btn-sm" aria-pressed="false">CANCELAR</button>
+                <button  (click)="guardarOrUpdateCobro()" class="btn btn-primary btn-sm" aria-pressed="false">GUARDAR COBRO</button>
+            </div>
+        </div>
+
+    </div>
+</div>

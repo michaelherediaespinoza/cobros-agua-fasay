@@ -1,0 +1,28 @@
+h1, h2, h3, h4 {
+  font-size: large;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+p {
+  color: #848484;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+
+/* Puedes ajustar los estilos según tus preferencias */
+.custom-input {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  /* Puedes agregar estilos específicos para cuando el campo está enfocado */
+.custom-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  }

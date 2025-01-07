@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+    <button (click)="menuToggled.emit(true)" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="title" routerLink="/home">Dashboard</span>
+    <span class="spacer"></span>
+    <p class="welcome-text">Fecha de Ingreso: {{ todayDate | date:'dd/MM/yyyy HH:mm:ss' }} &nbsp; &nbsp; </p>
+    <u class="welcome-text" (click)="getUserlogiado()">View Usuario: {{ dataUsuarioLogin }}</u>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>person_pin</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>

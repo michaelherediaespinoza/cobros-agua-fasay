@@ -1,0 +1,306 @@
+<app-page-header icon="group">
+    <h2 class="titulo-personalizado">Lista de COBROS</h2>
+    
+    <h2 class="text-center"> Usuario: {{ nombresCajeroConUsuario }}</h2>
+    
+    <button routerLink="/home" mat-flat-button color="primary" class="action">
+      <mat-icon class="mr-2">home</mat-icon>
+      <span>Go Home</span>
+    </button>
+    
+  </app-page-header>
+
+<div class="dashboard-card-content">
+    <div id="listcobrofocus" #listcobrofocus tabindex="0" id="componentListaCobroAdmin"
+        aria-label="A ingresado a la lista de cobros" class="card">
+        <!--
+        <div class="card-header">
+            <h2 class="estiloLetra">LISTA DE CLIENTES</h2>
+        </div>
+        -->
+
+        <div id="divtable" #drop class="card-body">
+
+            <div style="text-align: right">
+                <div *ngIf="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
+            </div>
+
+            <div class="flex-container"> 
+                
+                <!-- cliente-combo.component.html -->
+                <ng-container *ngIf="lData && lData.length > 0; else loading">
+                    <igx-combo #combo class="combo" [itemsMaxHeight]="250"
+                        [data]="lData" [displayKey]="'apellido'" [valueKey]="'codigo'"
+                        placeholder="Buscar Clientes / Socios" searchPlaceholder="Search..."
+                        (selectionChanging)="onSelectionChange($event)">
+
+                        <ng-template igxComboItem let-item>
+                            {{ item.nombre }} {{ item.apellido }}
+                        </ng-template>
+
+                        <ng-template igxComboHeaderItem let-item>
+                            {{ item.nombre }} {{ item.apellido }}
+                        </ng-template>
+
+                    </igx-combo>
+                </ng-container>
+                <ng-template #loading>
+                    <p>Cargando datos de Clientes...</p>
+                </ng-template>
+
+                <mat-form-field class="mat-elevation-z3" >
+                    <mat-label>Nombres / Apellidos</mat-label>
+                        <input class="margin-" matInput [(ngModel)]="nombreApellidoCliente" [disabled]="true" > 
+                </mat-form-field>
+            
+                <mat-form-field class="mat-elevation-z3">
+                    <mat-label>Buscar por Cedula</mat-label>
+                    <input matInput [(ngModel)]="cedulaCliente" (keydown.enter)="onEnterPress()" placeholder="01070*****" 
+                            #anotherInput autocomplete="off" >
+                </mat-form-field>
+                
+                <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="getAllCobrosPorClienteCedula()">
+                    <span>BUSCAR</span>
+                    <mat-icon>search</mat-icon>
+                  </button>
+
+            </div>
+
+            <table tabindex="0" mat-table [dataSource]="dataSource" matSort class="table table-bordered" role="table">
+
+                <ng-container matColumnDef="codigo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CÓDIGO </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_codigo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fecha">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro?.cob_fecha}} </td>
+                </ng-container>
+                <ng-container matColumnDef="valorActual">
+                    <th mat-header-cell *matHeaderCellDef> VAL. ACT. </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_valorActual}} </td>
+                </ng-container>
+                <ng-container matColumnDef="mulTrabajo">
+                    <th mat-header-cell *matHeaderCellDef> MUL. TRABAJO </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_mul_trabajo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="mulReunion">
+                    <th mat-header-cell *matHeaderCellDef> MUL. REUNIÓN </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_mul_reunion}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="mulDesfile">
+                    <th mat-header-cell *matHeaderCellDef> MUL. DESFILE </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_mul_desfile}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cambioMedidor">
+                    <th mat-header-cell *matHeaderCellDef> CAM. MEDIDOR </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_cambioMedidor}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nuevoSocio">
+                    <th mat-header-cell *matHeaderCellDef> NUE. SOCIO </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_nuevoSocio}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="insumo">
+                    <th mat-header-cell *matHeaderCellDef> INSUMOS </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_insumo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="otro">
+                    <th mat-header-cell *matHeaderCellDef> OTROS </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_otros}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef> TOTAL </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_total}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="estado">
+                    <th mat-header-cell *matHeaderCellDef> ESTADO </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.cob_estado}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cedula">
+                    <th mat-header-cell *matHeaderCellDef> CEDULA </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.medidor.cliente.cedula}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef> NOMBRE </th>
+                    <td mat-cell *matCellDef="let cobro"> {{cobro.medidor.cliente.nombre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> ACCIONES </th>
+                    <td mat-cell *matCellDef="let cobro">
+                        <a class="pointer" (click)="getCodigoCobroParaUpdateEstado(cobro)">
+                            <button mat-raised-button focusable="true" aria-pressed="false">
+                                <i class="bi bi-pencil-square" style='color: blue'>REALIZAR COBRO</i>
+                            </button>
+                        </a>                        
+                    </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data.
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Datos NO coinciden con el filtro "{{input.value}}"</td>
+                </tr>
+                 -->
+
+                </table>
+
+
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select paginas"></mat-paginator>
+
+        </div>
+
+        
+            <!--TEMPLATE RECIBO -->
+            <ng-template #myModalRecibo id="myModalRecibo" let-c="close" let-d="dismiss">
+                <div class="card border-info" style="width: 100%;" id="pdfTableRecibo" #pdfTableRecibo>
+                    <div class="card-header text-white bg-secondary mat-elevation-z4">
+                        <mat-grid-list cols="3" rowHeight="4:0.5">
+                            <mat-grid-tile [colspan]="3" [rowspan]="1">
+                                <img class="logo" src="./assets/img/logos/fasay.png" alt="Logo">
+                                    <h5 style="text-align: center; margin-top: 1px; font-size: medium;">COOPERATIVA DE AHORRO Y CRÉDITO FASAYÑAN LTDA.</h5>
+                                    <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                                        <mat-icon class="close-icon white-icon">close</mat-icon>
+                                    </button>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    </div>
+
+                    <div #myModalRecibo id="myModalRecibo" mat-dialog-content aria-modal="true" role="dialog" id="matdialogekg" aria-labelledby="matdialogekg" mat-elevation-z4>
+                        <div class="card-body mat-elevation-z3" >
+                            <form>
+                                <mat-grid-tile-header>
+                                      <!-- Añadimos la imagen aquí (logo) -->
+                                    <img src="./assets/img/logos/recibo.png" alt="Recibo Logo" class="header-image">
+                                    <h5 igxCardHeaderSubtitle class="font-weight-bold" style="text-align: center; margin-top: 20px;">RECIBO</h5>
+                                </mat-grid-tile-header>
+                                <mat-grid-list cols="3" rowHeight="3:1" gutterSize="5px">
+                                    <mat-grid-tile>
+                                        <div class="form-group">
+                                            <label for="modalcajero">Cajera/o:</label>
+                                            <input [(ngModel)]="nombresCajero" id="modalcajero" name="modalcajero"
+                                                    type="text" class="form-control">
+                                        </div>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <div class="form-group">
+                                            <label for="modalfechahora">Fecha - Hora:</label>
+                                            <input [(ngModel)]="fechaHoraFormateada" id="modalfechahora" name="modalfechahora"
+                                                    type="text" class="form-control">
+                                        </div>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <div class="form-group">
+                                            <label for="modalnumcomprobante">N# Comprobante:</label>
+                                            <input [(ngModel)]="maxNumeroRecibo" id="modalnumcomprobante" name="modalnumcomprobante"
+                                                    type="number" class="form-control">
+                                        </div>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <div class="form-group">
+                                            <label for="modalcedula">Cédula:</label>
+                                            <input [(ngModel)]="cedulaClienteRecibo" id="modalcedula" name="modalcedula"
+                                                    type="text" class="form-control">
+                                        </div>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <div class="form-group">
+                                            <label for="modalnombre">Nombre:</label>
+                                            <input [(ngModel)]="nombresClienteRecibo" id="modalnombre" name="modalnombre"
+                                                    type="text" class="form-control">
+                                        </div>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <div class="form-group">
+                                            <label for="modalapellido">Apellido:</label>
+                                            <input [(ngModel)]="apellidosClienteRecibo" id="modalapellido" name="modalapellido"
+                                                    type="text" class="form-control">
+                                        </div>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <div class="form-group">
+                                            <label for="modeldescrip">Fecha Consumo:</label>
+                                            <input [(ngModel)]="fechaConsumoAguaRecibo" id="modeldescrip" name="modeldescrip"
+                                                    type="text" class="form-control">
+                                        </div>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <div class="form-group">
+                                            <label for="modalnumemedidor">N·# Medidor:</label>
+                                            <input [(ngModel)]="numeroMedidorRecibo" id="modalnumemedidor" name="modalnumemedidor"
+                                                    type="text" class="form-control">
+                                        </div>
+                                    </mat-grid-tile>
+
+                                    
+                                    <mat-grid-tile>
+                                        <div class="form-group">
+                                            <label for="modalobserva">Observaciones:</label>
+                                            <textarea [(ngModel)]="observacion" type="text"
+                                                    name="modalobserva" rows="2"></textarea>
+                                            </div>
+                                    </mat-grid-tile>
+
+                                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+                                        <div class="form-group">
+                                            <label for="modaltotal">Total:</label>
+                                            <input [(ngModel)]="totalApagarRecibo" id="modaltotal" name="modaltotal"
+                                                    type="number" class="form-control">
+                                        </div>
+                                    </mat-grid-tile>
+
+                                    <!--
+                                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+                                        <div style='float:left; margin-top: 4%; width:20%' class="form-group">
+                                            <label for="modalfirmacajero">Firma Cajero:</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="txtArea" [(ngModel)]="formattedDate"
+                                                    name="modalfirmacajero" rows="2" cols="20">
+                                            </textarea>
+                                        </div>
+                                    </mat-grid-tile>
+                                    -->
+                                </mat-grid-list>
+                            </form>
+                        </div>
+                    </div>
+
+                        <div style="margin-bottom: 3%;" class="card-footer bg-transparent border-success">
+                            <div mat-dialog-actions align="center">
+                                <label  *ngIf="isCajeroVisible" for="cajer">Cajero:</label>
+                                <input  *ngIf="isCajeroVisible" [(ngModel)]="nombresCajero" id="datacajero" name="datacajero" type="text" class="form-control">
+                                <label  *ngIf="isCajeroVisible" for="linea">_________________________________</label>
+                                <button mat-button mat-raised-button color="primary" *ngIf="isButtonVisible" (click)="confirmacionGuardarCobro()">CONFIRMAR</button>
+                               <!-- <button mat-button mat-raised-button color="primary" (click)="printPDFRecibo()">IMPRIMIR</button> -->
+                                <button mat-button mat-raised-button color="primary" *ngIf="isButtonVisible" (click)="closeDialog()" >CANCELAR</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-template>
+
+        
+        
+        <!-- 
+        <button (click)="getUserlogiado()">Open Dialog</button>
+        <button (click)="downloadPDF()">Open Dialog</button>
+        -->
+    </div>
+</div>

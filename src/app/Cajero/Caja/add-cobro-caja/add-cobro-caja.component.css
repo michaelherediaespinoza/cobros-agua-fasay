@@ -1,0 +1,118 @@
+h1, h2, h3, h4 {
+  font-size: initial;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+p {
+  color: #848484;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+.titulo-personalizado {
+  font-size: 20px;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+}
+
+.mat-form-field {
+  margin-right: 16px; /* Ajusta el margen según sea necesario */
+}
+
+
+
+
+
+
+/*  DESDE AQUI VERIFICAR COPY ANTIGUO PROYECTO */
+
+.hidden{
+  visibility:hidden;
+}
+
+.txtArea {
+  margin-top: 10%;
+  margin-bottom: 5%;
+  margin-left: 20px;
+}
+
+.white-icon {
+  color: white;
+}
+/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
+.white-icon svg {
+  fill: white;
+}
+
+
+.logo {
+  height: 50px; /* Ajusta la altura según sea necesario */
+  margin-right: 20px;
+}
+
+.title {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+}
+
+h5 {
+  flex-grow: 1;  /* Permite que el h5 ocupe el espacio disponible */
+  text-align: center;
+  margin: 0;
+  font-size: medium;
+}
+
+.close-button {
+  /* margin-left: 20px; */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.close-icon {
+  color: white;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 1%;
+  
+}
+
+
+
+
+
+.header-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%; /* Esto asegura que la imagen no se salga del contenedor */
+}
+
+.header-title {
+  text-align: center;
+  margin-top: 20px; /* Ajusta este valor según sea necesario */
+}
+
+
+.combo {
+    margin: 8px;
+    width: 410px;
+}
+
+
+.button-sample {
+  display: flex;
+  flex: 1 0 20%;
+  align-items: center;
+  justify-content: space-evenly;
+}

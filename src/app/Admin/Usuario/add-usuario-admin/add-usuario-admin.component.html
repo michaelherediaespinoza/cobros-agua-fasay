@@ -1,0 +1,130 @@
+<app-page-header icon="person_add">
+    <h2>Agregar Usuario</h2>
+
+    <button routerLink="/home" mat-flat-button color="primary" class="action">
+      <mat-icon class="mr-2">home</mat-icon>
+      <span>Go Home</span>
+    </button>
+  </app-page-header>
+
+<div class="dashboard-card-content">
+    <div class="card border-info" style="width: 100%;">
+        <div class="card-header text-white bg-dark" role="banner" aria-label="Información del paciente">
+            <h4 style="text-align: center;margin-top: 20px;">REGISTRAR USUARIO</h4>
+        </div>
+        <div id="addclientefocus" #addclientetefocus tabindex="-1" class="card-body" border-danger role="form"
+            aria-label="Registro cliente">
+            <form >
+                <mat-grid-list cols="3" rowHeight="2:0.5" class="mat-elevation-z4">
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="nombrep">Nombres:</label>
+                            <input [(ngModel)]="usuario.nombre" id="nombrep" name="nombre" type="text"
+                                class="form-control border border-dark"
+                                (keypress)="onlyLetters($event)">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="apellidop">Apellidos:</label>
+                            <input [(ngModel)]="usuario.apellido" id="apellidop" name="apellido" type="text"
+                                class="form-control border border-dark">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="user">Usuario:</label>
+                            <input [(ngModel)]="usuario.user" id="user" name="user" type="text"
+                                matInput class="form-control border border-dark">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="pass">Password :</label>
+                            <input [(ngModel)]="usuario.password" id="pass" name="pass" type="password" matInput
+                                class="form-control border border-dark">
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>ESTADO: </mat-label>
+                                <mat-select [(value)]="usuario.estado">
+                                    <mat-option>NINGUNO</mat-option>
+                                    <mat-option value="A">ACTIVO</mat-option>
+                                    <mat-option value="I">INACTIVO</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Fecha Creación</mat-label>
+                            <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
+                            <mat-hint class="some-color" >MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker touchUi #picker></mat-datepicker>
+                          </mat-form-field>                                         
+                    </mat-grid-tile>
+              
+                    <!--
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <label for="fechaIngreso">Fecha de Ingreso:</label>
+                            <input [(ngModel)]="cliente.fechaIngreso" id="fechaIngreso"
+                                name="fechaIngreso" type="date" class="form-control border border-dark">
+                        </div>
+                    </mat-grid-tile>
+                    -->
+
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>CARGO: </mat-label>
+                                <mat-select [(ngModel)]="usuario.cargo" name="cargo">
+                                    <mat-option *ngFor="let cargo of cargos" [value]="cargo">
+                                      {{ cargo.nombre }}
+                                    </mat-option>
+                                  </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>AGENCIA: </mat-label>
+                                <mat-select [(ngModel)]="usuario.agencia" name="agencia">
+                                    <mat-option *ngFor="let agencia of agencias" [value]="agencia">
+                                      {{ agencia.direccion }}
+                                    </mat-option>
+                                  </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Rol: </mat-label>
+                                <mat-select [(ngModel)]="usuario.rol" name="rol">
+                                    <mat-option *ngFor="let rol of roles" [value]="rol">
+                                      {{ rol.nombre }}
+                                    </mat-option>
+                                  </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </mat-grid-tile>
+
+                </mat-grid-list>
+            </form>
+        </div>
+
+        <div style="margin-bottom: 1%;" class="card-footer bg-transparent border-success" role="contentinfo">
+            <div mat-dialog-actions align="center">
+                <button  style="margin-right: 5%;" (click)="cacelar()" class="btn btn-primary btn-sm" aria-pressed="false">Cancelar</button>
+                <button  (click)="guardarOrUpdateUsuario()" class="btn btn-primary btn-sm" aria-pressed="false">Guardar Cliente</button>
+            </div>
+        </div>
+
+    </div>
+</div>

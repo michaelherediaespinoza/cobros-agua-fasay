@@ -1,0 +1,118 @@
+h1, h2, h3, h4 {
+  font-size: initial;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+p {
+  color: #848484;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}
+
+
+
+/* styles.css (o el nombre de tu archivo CSS) */
+
+/* Estilos generales para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Estilos para el encabezado de la tabla */
+thead {
+  background-color: #f0f0f0;
+}
+
+thead th {
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Estilos para las celdas de la tabla */
+tbody td {
+  padding: 10px 15px;
+  vertical-align: middle;
+}
+
+/* Estilo alternado para filas (zebra striping) */
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Estilos para filas al pasar el ratón */
+tbody tr:hover {
+  background-color: #e0e0e0;
+}
+
+
+
+
+
+/* styles.css (o tu archivo de estilos CSS) */
+
+@keyframes highlight {
+  0% { background-color: rgba(0, 34, 255, 0.5); } /* Amarillo semitransparente */
+  100% { background-color: inherit; } /* Volver al color de fondo normal */
+}
+
+.highlight {
+  animation: highlight 3s ease-out; /* Duración y easing de la animación */
+}
+
+
+ 
+/* DANDOLE ESTILOS AL INPUT DONDE SALE EL VALOR TOTAL DE LA SUMA O CUADRE POR FECHA ACTUAL */
+
+.custom-input {
+  font-size: 23px; /* Tamaño de fuente */
+  font-weight: bold; /* Negrita */
+  font-style: italic; /* Cursiva */
+  color: #333; /* Color de texto */
+  width: 300px; /* Ancho del input */
+  padding: 10px; /* Relleno interior */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+/* Estilos adicionales según sea necesario */
+.custom-input:focus {
+  outline: none; /* Eliminar el contorno al enfocar */
+  border-color: #007bff; /* Color del borde al enfocar */
+}
+
+
+
+/* your-component.component.css */
+
+.mat-form-field.has-value {
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo medio negro */
+  padding: 10px; /* Ajuste de relleno para que se vea bien */
+  border-radius: 4px; /* Borde redondeado opcional */
+}
+
+.custom-input {
+  width: calc(100% - 40px); /* Ajusta el ancho del input según sea necesario */
+}
+
+.mat-form-field-suffix {
+  margin-left: 8px; /* Ajusta el margen izquierdo del botón según sea necesario */
+}
+
