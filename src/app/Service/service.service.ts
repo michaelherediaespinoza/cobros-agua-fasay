@@ -18,7 +18,7 @@ import { cargo } from '../Entity/Cargo';
 })
 export class ServiceService {
 
-  private ipConexeion: string = "http://192.168.88.61:8080";
+  private ipConexeion: string = "http://192.168.89.18:8080";
 
   constructor(private http: HttpClient) { }
 

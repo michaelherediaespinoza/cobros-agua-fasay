@@ -1,0 +1,9 @@
+version: '3'
+services:
+  cobroaguafasay-app:
+    container_name: cobroaguafasay-app
+    image: cobrosaguafasay
+    build: .
+    ports:
+      - "8000:80"
+    restart: always
